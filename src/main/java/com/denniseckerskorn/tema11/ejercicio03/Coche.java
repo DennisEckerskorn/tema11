@@ -35,18 +35,27 @@ public class Coche {
     }
 
     public void acelerar(float aceleracion) {
-        if(aceleracion <= 0) {
+        if (aceleracion <= 0) {
             velocidad = 0;
+        } else {
+            velocidad += aceleracion;
         }
-        velocidad += aceleracion;
     }
 
     public void frenar(float frenada) {
+        if (frenada <= 0) {
+            return;
+        } else {
+            velocidad -= frenada;
+        }
 
+        if (velocidad < 0) {
+            velocidad = 0;
+        }
     }
 
     protected void setMarcha(int cambioMarcha) {
-        if(cambioMarcha <= 0) {
+        if (cambioMarcha <= 0) {
             marcha = 0;
         }
         marcha = cambioMarcha;
