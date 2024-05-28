@@ -10,20 +10,24 @@ public class Punto {
     /**
      * Constructor sin parámetros, inicializa x, y en 0
      */
-    public Punto() {
+    public Punto(double x, double y) {
         this.x = 0;
         this.y = 0;
     }
 
     /**
      * Constructor que recibe dos parámetros x, y e inicializa los attributos de la clase en estos valores
-     *
-     * @param x double coordenada x del punto.
-     * @param y double coordenada y del punto.
      */
-    public Punto(double x, double y) {
-        this.x = x;
-        this.y = y;
+    public Punto() {
+        this(0, 0);
+    }
+
+    /**
+     * Constructor copia
+     * @param punto
+     */
+    public Punto(Punto punto) {
+        this(punto.getX(), punto.getY());
     }
 
     /**
@@ -33,9 +37,9 @@ public class Punto {
      * @return la distancia entre puntos x, y
      */
     public double distancia(Punto punto) {
-        double distanciaX = this.x - punto.x;
-        double distanciaY = this.y - punto.y;
-        return Math.sqrt(distanciaX * distanciaX + distanciaY * distanciaY);
+        double distanciaX = Math.pow(this.x - punto.x, 2);
+        double distanciaY = Math.pow(this.y - punto.y, 2);
+        return Math.sqrt(distanciaX + distanciaY);
     }
 
     /**
