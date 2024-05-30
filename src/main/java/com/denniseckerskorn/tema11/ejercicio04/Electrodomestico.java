@@ -20,17 +20,23 @@ public class Electrodomestico implements Priceable {
 
     /**
      * Constructor con todos los parametros.
+     * Revisa si las letras iniciadas son correctas, si no, los cambia al valor incial.
      *
-     * @param color             enum color del electrodomestico
-     * @param consumoEnergetico enum consumo energético del electrodomestico
-     * @param precioBase        float precio del electrodomestico
-     * @param peso              float precio del electrodomestico
+     * @param color      String color del electrodomestico
+     * @param consumo    char consumo energético del electrodomestico
+     * @param precioBase float precio del electrodomestico
+     * @param peso       float precio del electrodomestico
      */
-    public Electrodomestico(Color color, ConsumoEnergetico consumoEnergetico, float precioBase, float peso) {
-        this.color = color;
-        this.consumoEnergetico = consumoEnergetico;
+    public Electrodomestico(String color, char consumo, float precioBase, float peso) {
+        if (!comprobarColor(color)) {
+            this.color = COLOR_INICIAL;
+        }
+        if (!comprobarConsumoEnergetico(consumo)) {
+            this.consumoEnergetico = CONSUMO_INICIAL;
+        }
         this.precioBase = precioBase;
         this.peso = peso;
+
     }
 
     /**
@@ -50,7 +56,8 @@ public class Electrodomestico implements Priceable {
      * Constructor por defecto
      */
     public Electrodomestico() {
-        this(Color.BLANCO, ConsumoEnergetico.F, PRECIO_INICIAL, PESO_INICIAL);
+        this(COLOR_INICIAL.toString(), CONSUMO_INICIAL.toString().charAt(0), PRECIO_INICIAL, PESO_INICIAL);
+
     }
 
     public Color getColor() {
@@ -69,17 +76,73 @@ public class Electrodomestico implements Priceable {
         return peso;
     }
 
-    private boolean comrpobarConsumoEnergetico(char letra) {
-        return false;
+    /**
+     * Comprueba si la letra del consumo energético es válida.
+     *
+     * @param letra la letra que representa el consumo energético.
+     * @return true si la letra es válida y se asigna correctamente, false de lo contrario.
+     */
+    private boolean comprobarConsumoEnergetico(char letra) {
+        try {
+            this.consumoEnergetico = ConsumoEnergetico.valueOf(String.valueOf(letra).toUpperCase());
+            return true;
+        } catch (
+                IllegalArgumentException iae) {
+            return false;
+        }
     }
 
+    /**
+     * Comprueba si el color es válido.
+     *
+     * @param color el nombre del color.
+     * @return true si el color es válido y se asigna correctamente, false de lo contrario.
+     */
     private boolean comprobarColor(String color) {
-        return false;
+        try {
+            this.color = Color.valueOf(String.valueOf(color).toUpperCase());
+            return true;
+        } catch (IllegalArgumentException iae) {
+            return false;
+        }
     }
 
     @Override
     public double precioFinal() {
-        return 0;
+        double resultadoFinal = this.precioBase;
+
+        switch (this.consumoEnergetico) {
+            case A:
+                resultadoFinal += 100;
+                break;
+            case B:
+                resultadoFinal += 80;
+                break;
+            case C:
+                resultadoFinal += 60;
+                break;
+            case D:
+                resultadoFinal += 50;
+                break;
+            case E:
+                resultadoFinal += 30;
+                break;
+            case F:
+                resultadoFinal += 10;
+                break;
+        }
+
+        if (this.peso >= 0 && this.peso <= 19) {
+            resultadoFinal += 10;
+        } else if (this.peso >= 20 && this.peso <= 49) {
+            resultadoFinal += 50;
+        } else if (this.peso >= 50 && this.peso <= 79) {
+            resultadoFinal += 80;
+        } else {
+            resultadoFinal += 100;
+        }
+
+        return resultadoFinal;
     }
 
 
