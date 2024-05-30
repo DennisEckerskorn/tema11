@@ -7,12 +7,12 @@ public class Electrodomestico implements Priceable {
 
     public enum ConsumoEnergetico {A, B, C, D, E, F}
 
-
+    /*
     private static final Color COLOR_INICIAL = Color.BLANCO;
     private static final ConsumoEnergetico CONSUMO_INICIAL = ConsumoEnergetico.F;
     private static final float PRECIO_INICIAL = 100;
     private static final float PESO_INICIAL = 5;
-
+    */
     private Color color;
     private ConsumoEnergetico consumoEnergetico;
     private float precioBase;
@@ -171,6 +171,6 @@ public class Electrodomestico implements Priceable {
                 ", consumoEnergetico=" + consumoEnergetico +
                 ", precioBase=" + precioBase +
                 ", peso=" + peso +
-                '}';
+                '}' + "\n";
     }
 }
