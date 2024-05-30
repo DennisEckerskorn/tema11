@@ -2,8 +2,9 @@ package com.denniseckerskorn.tema11.ejercicio04;
 
 import java.util.Objects;
 
-public abstract class Electrodomestico implements Priceable {
+public class Electrodomestico implements Priceable {
     public enum Color {BLANCO, NEGRO, GRIS, AZUL, ROJO}
+
     public enum ConsumoEnergetico {A, B, C, D, E, F}
 
 
@@ -68,8 +69,19 @@ public abstract class Electrodomestico implements Priceable {
         return peso;
     }
 
+    private boolean comrpobarConsumoEnergetico(char letra) {
+        return false;
+    }
+
+    private boolean comprobarColor(String color) {
+        return false;
+    }
+
     @Override
-    public abstract double precioFinal();
+    public double precioFinal() {
+        return 0;
+    }
+
 
     @Override
     public boolean equals(Object o) {
