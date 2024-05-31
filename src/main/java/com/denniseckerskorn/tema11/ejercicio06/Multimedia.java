@@ -65,11 +65,9 @@ public class Multimedia {
 
     @Override
     public String toString() {
-        return "Multimedia{" +
-                "titulo='" + titulo + '\'' +
-                ", autor='" + autor + '\'' +
-                ", anyo='" + anyo + '\'' +
-                ", formato=" + formato +
-                '}';
+        return "{Titulo = " + titulo + "\n" +
+                "Autor = " + autor + "\n" +
+                "Año = " + anyo + "\n" +
+                "Formato = " + formato + "}\n";
     }
 }

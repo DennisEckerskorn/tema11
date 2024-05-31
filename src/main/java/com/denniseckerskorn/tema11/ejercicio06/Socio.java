@@ -15,15 +15,64 @@ public class Socio {
         this.nombre = nombre;
         this.fechaNacimiento = fechaNacimiento;
         this.poblacion = poblacion;
-        this.edad = getEdadSocio();
+        this.edad = calcularEdad();
         if (edad < 18) {
             throw new IllegalArgumentException("El socio no puede ser menor de edad");
         }
     }
 
-    private int getEdadSocio() {
+    private int calcularEdad() {
         LocalDate now = LocalDate.now();
         Period period = Period.between(fechaNacimiento, now);
         return period.getYears();
+    }
+
+    public String getNif() {
+        return nif;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public LocalDate getFechaNacimiento() {
+        return fechaNacimiento;
+    }
+
+    public String getPoblacion() {
+        return poblacion;
+    }
+
+    public int getEdad() {
+        return edad;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Socio socio = (Socio) o;
+        return edad == socio.edad && nif.equals(socio.nif) && nombre.equals(socio.nombre) && fechaNacimiento.equals(socio.fechaNacimiento) && poblacion.equals(socio.poblacion);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = nif.hashCode();
+        result = 31 * result + nombre.hashCode();
+        result = 31 * result + fechaNacimiento.hashCode();
+        result = 31 * result + poblacion.hashCode();
+        result = 31 * result + edad;
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return "{NIF = " + nif + "\n" +
+                "Nombre = " + nombre + "\n" +
+                "Fecha Nacimiento = " + fechaNacimiento + "\n" +
+                "Poblacion = " + poblacion + "\n" +
+                "Edad = " + edad + "}\n";
+
     }
 }

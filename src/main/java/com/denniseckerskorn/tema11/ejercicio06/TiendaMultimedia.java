@@ -9,12 +9,12 @@ public class TiendaMultimedia {
     private static final int CANTIDAD_INICIAL = 10;
     private List<Multimedia> productosMultimedia;
     private List<Socio> socios;
-    private Map<Socio, Multimedia> alquiler;
+    private Map<Socio, List<Prestamo>> prestamos;
 
     public TiendaMultimedia() {
         this.productosMultimedia = new ArrayList<>();
         this.socios = new ArrayList<>();
-        this.alquiler = new HashMap<>();
+        this.prestamos = new HashMap<>();
         addPeliculas(CANTIDAD_INICIAL);
         addVideojuego(CANTIDAD_INICIAL);
         addSocios(CANTIDAD_INICIAL);
@@ -69,6 +69,12 @@ public class TiendaMultimedia {
         }
     }
 
+    public Multimedia
+
+    public Prestamo alquilarMultimedia() {
+
+    }
+
 
     public List<Multimedia> getProductosMultimedia() {
         return productosMultimedia;
@@ -80,5 +86,30 @@ public class TiendaMultimedia {
 
     public Map<Socio, Multimedia> getAlquiler() {
         return alquiler;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        TiendaMultimedia that = (TiendaMultimedia) o;
+        return Objects.equals(productosMultimedia, that.productosMultimedia) && Objects.equals(socios, that.socios) && Objects.equals(alquiler, that.alquiler);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = Objects.hashCode(productosMultimedia);
+        result = 31 * result + Objects.hashCode(socios);
+        result = 31 * result + Objects.hashCode(alquiler);
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return "TiendaMultimedia: \n" + productosMultimedia + "\n" +
+                "Socios: \n" + socios +
+                "Alquileres: \n" + alquiler;
+
     }
 }
