@@ -480,5 +480,7 @@ public class LibIO {
         } while (!valido);
         return fecha;
     }
+
+    //TODO: Añador un metodo que calcula la edad a partir de date y de localdate
 }
 
