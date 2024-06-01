@@ -7,14 +7,14 @@ import java.util.*;
 
 public class TiendaMultimedia {
     private static final int CANTIDAD_INICIAL = 10;
-    private List<Multimedia> productosMultimedia;
-    private List<Socio> socios;
-    private Map<Socio, List<Prestamo>> prestamos;
+    private Map<String, Multimedia> productosMultimedia;
+    private Map<String, Socio> socios;
+    private List<Prestamo> prestamos;
 
     public TiendaMultimedia() {
-        this.productosMultimedia = new ArrayList<>();
-        this.socios = new ArrayList<>();
-        this.prestamos = new HashMap<>();
+        this.productosMultimedia = new HashMap();
+        this.socios = new HashMap();
+        this.prestamos = new ArrayList<>();
         addPeliculas(CANTIDAD_INICIAL);
         addVideojuego(CANTIDAD_INICIAL);
         addSocios(CANTIDAD_INICIAL);
@@ -32,7 +32,7 @@ public class TiendaMultimedia {
             String actor = faker.oscarMovie().actor();
             String actriz = faker.oscarMovie().actor();
             Multimedia pelicula = new Pelicula(titulo, autor, anyo, formato, duracion, actor, actriz);
-            productosMultimedia.add(pelicula);
+            productosMultimedia.put(titulo, pelicula);
         }
     }
 
@@ -45,7 +45,7 @@ public class TiendaMultimedia {
             Formato formato = Formato.values()[faker.random().nextInt(Formato.values().length)];
             Plataforma plataforma = Plataforma.values()[faker.random().nextInt(Formato.values().length)];
             Multimedia videojuego = new Videojuego(titulo, autor, anyo, formato, plataforma);
-            productosMultimedia.add(videojuego);
+            productosMultimedia.put(titulo, videojuego);
         }
     }
 
@@ -62,30 +62,38 @@ public class TiendaMultimedia {
             String poblacion = faker.address().city();
             try {
                 Socio socio = new Socio(nif, nombre, fechaNacimiento, poblacion);
-                socios.add(socio);
+                socios.put(nif, socio);
             } catch (IllegalArgumentException iae) {
-                iae.getMessage();
+                System.err.println(iae.getMessage());
             }
         }
     }
 
-    public Multimedia
-
-    public Prestamo alquilarMultimedia() {
-
+    /**
+     * Permite calcular el recargo pendiente de pagar del socio.
+     * Si el Socio tiene varios prestamos se obtienen todos estos recargos.
+     * @return double el recargo pendiente de pagar.
+     */
+    public double calcularRecargosPendientes() {
+        double recargosPendientes = 0;
+        for(Prestamo prestamo : prestamos) {
+            if(prestamo.getRecargo() > 0) {
+                recargosPendientes += prestamo.getRecargo();
+            }
+        }
+        return recargosPendientes;
     }
 
-
-    public List<Multimedia> getProductosMultimedia() {
+    public Map<String, Multimedia> getProductosMultimedia() {
         return productosMultimedia;
     }
 
-    public List<Socio> getSocios() {
+    public Map<String, Socio> getSocios() {
         return socios;
     }
 
-    public Map<Socio, Multimedia> getAlquiler() {
-        return alquiler;
+    public List<Prestamo> getPrestamos() {
+        return prestamos;
     }
 
     @Override
@@ -94,22 +102,22 @@ public class TiendaMultimedia {
         if (o == null || getClass() != o.getClass()) return false;
 
         TiendaMultimedia that = (TiendaMultimedia) o;
-        return Objects.equals(productosMultimedia, that.productosMultimedia) && Objects.equals(socios, that.socios) && Objects.equals(alquiler, that.alquiler);
+        return productosMultimedia.equals(that.productosMultimedia) && socios.equals(that.socios);
     }
 
     @Override
     public int hashCode() {
-        int result = Objects.hashCode(productosMultimedia);
-        result = 31 * result + Objects.hashCode(socios);
-        result = 31 * result + Objects.hashCode(alquiler);
+        int result = productosMultimedia.hashCode();
+        result = 31 * result + socios.hashCode();
         return result;
     }
 
     @Override
     public String toString() {
-        return "TiendaMultimedia: \n" + productosMultimedia + "\n" +
-                "Socios: \n" + socios +
-                "Alquileres: \n" + alquiler;
-
+        return "TiendaMultimedia{" +
+                "productosMultimedia=" + productosMultimedia +
+                ", socios=" + socios +
+                ", prestamos=" + prestamos +
+                '}';
     }
 }

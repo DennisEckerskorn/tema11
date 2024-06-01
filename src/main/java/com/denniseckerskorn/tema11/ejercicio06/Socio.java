@@ -2,6 +2,8 @@ package com.denniseckerskorn.tema11.ejercicio06;
 
 import java.time.LocalDate;
 import java.time.Period;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Socio {
     private final String nif;
@@ -9,6 +11,7 @@ public class Socio {
     private final LocalDate fechaNacimiento;
     private final String poblacion;
     private final int edad;
+
 
     public Socio(String nif, String nombre, LocalDate fechaNacimiento, String poblacion) throws IllegalArgumentException {
         this.nif = nif;
@@ -23,8 +26,7 @@ public class Socio {
 
     private int calcularEdad() {
         LocalDate now = LocalDate.now();
-        Period period = Period.between(fechaNacimiento, now);
-        return period.getYears();
+        return Period.between(fechaNacimiento, now).getYears();
     }
 
     public String getNif() {
@@ -46,6 +48,8 @@ public class Socio {
     public int getEdad() {
         return edad;
     }
+
+
 
     @Override
     public boolean equals(Object o) {
