@@ -2,8 +2,7 @@ package com.denniseckerskorn.tema11.ejercicio06;
 
 import java.time.LocalDate;
 import java.time.Period;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class Socio {
     private List<Prestamo> prestamos;
@@ -12,6 +11,7 @@ public class Socio {
     private final LocalDate fechaNacimiento;
     private final String poblacion;
     private final int edad;
+    private double recargosPendientes;
 
 
     public Socio(String nif, String nombre, LocalDate fechaNacimiento, String poblacion) throws IllegalArgumentException {
@@ -21,6 +21,7 @@ public class Socio {
         this.fechaNacimiento = fechaNacimiento;
         this.poblacion = poblacion;
         this.edad = calcularEdad();
+        this.recargosPendientes = 0;
         if (edad < 18) {
             throw new IllegalArgumentException("El socio no puede ser menor de edad");
         }
@@ -51,8 +52,20 @@ public class Socio {
         return edad;
     }
 
+    public double getRecargosPendientes() {
+        return recargosPendientes;
+    }
+
     public List<Prestamo> getPrestamos() {
         return prestamos;
+    }
+
+    /**
+     * Permite establecer el total de recargos pendientes para el socio.
+     * @param recargosPendientes el total de recargos pendientes a establecer.
+     */
+    public void setRecargosPendientes(double recargosPendientes) {
+        this.recargosPendientes = recargosPendientes;
     }
 
     public double calcularRecargosPendientes() {

@@ -38,7 +38,7 @@ public class Prestamo {
      *
      * @return double recargo por el prestamo.
      */
-    private double calcularRecargo() {
+    public double calcularRecargo() {
         long diasRetraso = ChronoUnit.DAYS.between(fechaDevolucion, LocalDate.now());
         if (diasRetraso > 0) {
             return diasRetraso * RECARGO_POR_DIA;

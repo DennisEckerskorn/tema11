@@ -57,7 +57,8 @@ public class Menu {
                 case 4: //Alquilar
                     alquilarMultimediaASocio();
                     break;
-                case 5: //TODO: Devolver
+                case 5: //Devolver
+                    devolverMultimedia();
                     break;
                 case 6: //Listados
                     showSubMenu();
@@ -85,13 +86,16 @@ public class Menu {
                     listaPeliculasOrdenadasPorTitulo();
                     break;
                 case 3:
+                    listaVideoJuegosOrdenadasPorAnyo();
                     break;
                 case 4:
+                    listaAlquileresSocioOrdenadosPorFecha();
                     break;
                 case 5:
                     listaPrestamosSocio();
                     break;
                 case 6:
+                    listaSociosConRecargosPendientes();
                     break;
                 case 7:
                     System.out.println("Volviendo al menú inicial...");
@@ -111,15 +115,15 @@ public class Menu {
      */
     private void addPelicula() {
         System.out.println("Añadir Pelicula, rellena la información:");
-        String titulo = LibIO.requestString("Título:", 3, 20);
+        String titulo = LibIO.requestString("Título:", 3, 40);
         Multimedia pelicula = tiendaMultimedia.obtenerMultimediaPorTitulo(titulo);
         if (pelicula == null) {
-            String autor = LibIO.requestString("Autor:", 3, 20);
+            String autor = LibIO.requestString("Autor:", 3, 40);
             String anyo = LibIO.requestString("Año:", 4, 4);
             Formato formato = LibIO.requestEnum("Formato:", Formato.class);
             float duracion = LibIO.requestFloat("Duración (en minutos):", 0.00f, 200.00f);
-            String actor = LibIO.requestString("Actor:", 3, 20);
-            String actriz = LibIO.requestString("Actriz:", 3, 20);
+            String actor = LibIO.requestString("Actor:", 3, 40);
+            String actriz = LibIO.requestString("Actriz:", 3, 40);
             boolean added = tiendaMultimedia.addPelicula(titulo, autor, anyo, formato, duracion, actor, actriz);
             if (added) {
                 System.out.println("La película se ha añadido correctamente");
@@ -131,12 +135,17 @@ public class Menu {
         }
     }
 
+    /**
+     * Permite añadir un nuevo videojuego a la lista de productos multimedia.
+     * Se usa una libreria para validar los datos.
+     * Se obtiene una confirmación si se ha añadido correctamente.
+     */
     private void addVideojuego() {
         System.out.println("Añadir Videojuego, rellena la información:");
-        String titulo = LibIO.requestString("Título", 3, 20);
+        String titulo = LibIO.requestString("Título", 3, 40);
         Multimedia videojuego = tiendaMultimedia.obtenerMultimediaPorTitulo(titulo);
         if (videojuego == null) {
-            String autor = LibIO.requestString("Autor:", 3, 20);
+            String autor = LibIO.requestString("Autor:", 3, 40);
             String anyo = LibIO.requestString("Año:", 4, 4);
             Formato formato = LibIO.requestEnum("Formato:", Formato.class);
             Plataforma plataforma = LibIO.requestEnum("Plataforma:", Plataforma.class);
@@ -151,15 +160,18 @@ public class Menu {
         }
     }
 
+    /**
+     * Permite añadir un nuevo socio a la lista de socios
+     */
     private void addSocio() {
         System.out.println("Añadir un Socio nuevo, rellena la información:");
         String nif = LibIO.requestString("NIF:", 9, 11); // Ejemplo: 765-86-3224
         Socio socio = tiendaMultimedia.obtenerSocioPorNIF(nif);
         if (socio == null) {
-            String nombre = LibIO.requestString("Nombre:", 3, 20);
+            String nombre = LibIO.requestString("Nombre:", 3, 40);
             DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
             LocalDate fechaNacimiento = LibIO.solicitarFechaLocalDate("Fecha de Nacimiento: (dd/MM/yyyy)", dtf);
-            String poblacion = LibIO.requestString("Poblacion:", 3, 20);
+            String poblacion = LibIO.requestString("Poblacion:", 3, 40);
             try {
                 tiendaMultimedia.addSocio(nif, nombre, fechaNacimiento, poblacion);
                 System.out.println("El socio se ha añadido correctamente");
@@ -172,11 +184,13 @@ public class Menu {
         }
     }
 
-
+    /**
+     * Permite alquilar un producto multimedia
+     */
     private void alquilarMultimediaASocio() {
         System.out.println("Alquilar multimedia a Socio, rellena la información:");
 
-        String titulo = LibIO.requestString("Título del producto Multimedia:", 3, 20);
+        String titulo = LibIO.requestString("Título del producto Multimedia:", 3, 40);
         Multimedia multimedia = tiendaMultimedia.obtenerMultimediaPorTitulo(titulo);
 
         if (multimedia != null) {
@@ -214,7 +228,37 @@ public class Menu {
         System.out.println(prestamo);
     }
 
-    //Devolver Multimedia
+    /**
+     * Permite devolver un producto multimedia prestado por un socio.
+     */
+    private void devolverMultimedia() {
+        System.out.println("Devolver multimedia prestado por un socio, rellena la información:");
+
+        String titulo = LibIO.requestString("Título del producto:", 3, 40);
+        Multimedia multimedia = tiendaMultimedia.obtenerMultimediaPorTitulo(titulo);
+
+        if (multimedia == null) {
+            System.out.println("No se ha encontrado un producto multimedia con el título: " + titulo);
+            return;
+        }
+
+        String nif = LibIO.requestString("NIF del socio:", 9, 11);
+        Socio socio = tiendaMultimedia.obtenerSocioPorNIF(nif);
+
+        if (socio == null) {
+            System.out.println("No se ha encontrado un socio con el NIF: " + nif);
+            return;
+        }
+
+        boolean validReturn = tiendaMultimedia.devolverPrestamo(multimedia, socio);
+
+        if (validReturn) {
+            System.out.println("El producto multimedia se ha devuelto exitosamente.");
+        } else {
+            System.out.println("No se pudo devolver el producto multimedia.");
+        }
+    }
+
 
     //Listado de todos los objetos multimedia
     private void listaMultimediaCompleto() {
@@ -233,6 +277,33 @@ public class Menu {
             System.out.println(peliculas.toString());
         } else {
             System.out.println("No hay Peliculas...");
+        }
+    }
+
+    private void listaVideoJuegosOrdenadasPorAnyo() {
+        List<Multimedia> videojuegos = tiendaMultimedia.obtenerVidejuegosPorAnyo();
+        if (videojuegos != null) {
+            System.out.println(videojuegos.toString());
+        } else {
+            System.out.println("No hay Videojuegos...");
+        }
+    }
+
+    private void listaAlquileresSocioOrdenadosPorFecha() {
+        List<Prestamo> historicoPrestamos = tiendaMultimedia.obtenerHistoricoPrestamosPorFecha();
+        if (historicoPrestamos != null) {
+            System.out.println(historicoPrestamos.toString());
+        } else {
+            System.out.println("No existe ningun historico...");
+        }
+    }
+
+    private void listaSociosConRecargosPendientes() {
+        List<Socio> sociosRecargosPendientes = tiendaMultimedia.obtenerSociosConRecargosPendientes();
+        if (sociosRecargosPendientes != null) {
+            System.out.println(sociosRecargosPendientes.toString());
+        } else {
+            System.out.println("No existen socios con recargos pendientes...");
         }
     }
 

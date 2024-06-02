@@ -171,20 +171,92 @@ public class TiendaMultimedia {
         return true;
     }
 
+    public boolean devolverPrestamo(Multimedia multimedia, Socio socio) {
+        if (multimedia == null || socio == null) {
+            return false;
+        }
+
+        Prestamo prestamo = null;
+        for (Prestamo p : socio.getPrestamos()) {
+            if (p.getMultimedia().equals(multimedia)) {
+                prestamo = p;
+                break;
+            }
+        }
+
+        if (prestamo == null) {
+            return false;
+        }
+
+        double recargo = prestamo.calcularRecargo();
+        if (recargo > 0) {
+            socio.setRecargosPendientes(socio.getRecargosPendientes() + recargo);
+        }
+        socio.getPrestamos().remove(prestamo);
+        return true;
+    }
+
+    /**
+     * Obtiene todos los valores del Map y devuelve una coleccion
+     *
+     * @return Collection
+     */
     public Collection<Multimedia> obtenerMultimediaCompleto() {
         return productosMultimedia.values();
     }
 
+    /**
+     * Obtiene todas las peliculas y los ordena por su titulo alfabeticamente.
+     *
+     * @return List<Multimedia> de peliculas
+     */
     public List<Multimedia> obtenerPeliculasOrdenadasPorTitulo() {
         List<Multimedia> peliculas = new ArrayList<>();
-        for(Multimedia multimedia : productosMultimedia.values()) {
-            if(multimedia instanceof Pelicula) {
+        for (Multimedia multimedia : productosMultimedia.values()) {
+            if (multimedia instanceof Pelicula) {
                 peliculas.add(multimedia);
             }
         }
         peliculas.sort(Comparator.comparing(Multimedia::getTitulo));
         return peliculas;
     }
+
+    /**
+     * Permite obtener una lista de todos los videojuegos ordenados por el año.
+     *
+     * @return List<Multimedia> de videojuegos
+     */
+    public List<Multimedia> obtenerVidejuegosPorAnyo() {
+        List<Multimedia> videojuegos = new ArrayList<>();
+        for (Multimedia multimedia : productosMultimedia.values()) {
+            if (multimedia instanceof Videojuego) {
+                videojuegos.add(multimedia);
+            }
+        }
+        videojuegos.sort(Comparator.comparing(Multimedia::getAnyo));
+        return videojuegos;
+    }
+
+    public List<Prestamo> obtenerHistoricoPrestamosPorFecha() {
+        List<Prestamo> historico = new ArrayList<>();
+        for (Socio socio : socios.values()) {
+            historico.addAll(socio.getPrestamos());
+        }
+        historico.sort(Comparator.comparing(Prestamo::getFechaInicio));
+        return historico;
+    }
+
+    public List<Socio> obtenerSociosConRecargosPendientes() {
+        List<Socio> sociosConRecargos = new ArrayList<>();
+
+        for (Socio socio : socios.values()) {
+            if (socio.calcularRecargosPendientes() > 0) {
+                sociosConRecargos.add(socio);
+            }
+        }
+        return sociosConRecargos;
+    }
+
 
     public Map<String, Multimedia> getProductosMultimedia() {
         return productosMultimedia;
