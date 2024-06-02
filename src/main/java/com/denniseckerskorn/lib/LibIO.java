@@ -481,6 +481,34 @@ public class LibIO {
         return fecha;
     }
 
+    public static <E> E requestEnum(String prompt, Class<E> enumClass) {
+        E[] enumConstants = enumClass.getEnumConstants();
+        System.out.println(prompt);
+
+        for (int i = 0; i < enumConstants.length; i++) {
+            System.out.println((i + 1) + ". " + enumConstants[i]);
+        }
+
+        int opcion;
+        boolean valid;
+        do {
+            System.out.println("Ingresa el número correspondiente:");
+            try {
+                opcion = Integer.parseInt((LECTOR.nextLine()));
+                valid = opcion > 0 && opcion <= enumConstants.length;
+                if (valid) {
+                    return enumConstants[opcion - 1];
+                } else {
+                    System.out.println("Opción no válida. Intenta de nuevo");
+                }
+            } catch (NumberFormatException nfe) {
+                System.out.println("Entrada no válida. Por favor, ingrese un número");
+                valid = false;
+            }
+        } while (!valid);
+        return enumConstants[0];
+    }
+
     //TODO: Añador un metodo que calcula la edad a partir de date y de localdate
 }
 

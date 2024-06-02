@@ -12,16 +12,16 @@ public class TiendaMultimedia {
     private List<Prestamo> prestamos;
 
     public TiendaMultimedia() {
-        this.productosMultimedia = new HashMap();
+        this.productosMultimedia = new TreeMap<>();
         this.socios = new HashMap();
         this.prestamos = new ArrayList<>();
-        addPeliculas(CANTIDAD_INICIAL);
-        addVideojuego(CANTIDAD_INICIAL);
-        addSocios(CANTIDAD_INICIAL);
+        addPeliculasAuto(CANTIDAD_INICIAL);
+        addVideojuegoAuto(CANTIDAD_INICIAL);
+        addSociosAuto(CANTIDAD_INICIAL);
 
     }
 
-    private void addPeliculas(int cantidad) {
+    private void addPeliculasAuto(int cantidad) {
         Faker faker = new Faker(new Locale("es", "ES"));
         for (int i = 0; i < cantidad; i++) {
             String titulo = faker.oscarMovie().movieName();
@@ -36,7 +36,7 @@ public class TiendaMultimedia {
         }
     }
 
-    private void addVideojuego(int cantidad) {
+    private void addVideojuegoAuto(int cantidad) {
         Faker faker = new Faker(new Locale("es", "ES"));
         for (int i = 0; i < cantidad; i++) {
             String titulo = faker.oscarMovie().movieName();
@@ -49,7 +49,7 @@ public class TiendaMultimedia {
         }
     }
 
-    private void addSocios(int cantidad) {
+    private void addSociosAuto(int cantidad) {
         Faker faker = new Faker(new Locale("es", "ES"));
         for (int i = 0; i < cantidad; i++) {
             String nif = faker.idNumber().valid();
@@ -70,14 +70,92 @@ public class TiendaMultimedia {
     }
 
     /**
+     * Permite añdir una pelicula nueva a la lista de productos multimedia.
+     *
+     * @param titulo   String
+     * @param autor    String
+     * @param anyo     String
+     * @param formato  enumerado
+     * @param duracion float
+     * @param actor    String
+     * @param actriz   String
+     * @return true si se ha podido crear la pelicula con éxito, false si no se ha podido.
+     */
+    public boolean addPelicula(String titulo, String autor, String anyo, Formato formato, float duracion, String actor, String actriz) {
+        if (productosMultimedia != null) {
+            Multimedia pelicula = new Pelicula(titulo, autor, anyo, formato, duracion, actor, actriz);
+            productosMultimedia.put(titulo, pelicula);
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Permite añadir un Videojuego nuevo a la lista de productos multimedia.
+     *
+     * @param titulo     String
+     * @param autor      String
+     * @param anyo       String
+     * @param formato    enumerado
+     * @param plataforma enumerado
+     * @return true se ha añadido el objeto al la lista, false si no se ha podido.
+     */
+    public boolean addVideojuego(String titulo, String autor, String anyo, Formato formato, Plataforma plataforma) {
+        if (productosMultimedia != null) {
+            Multimedia videojuego = new Videojuego(titulo, autor, anyo, formato, plataforma);
+            productosMultimedia.put(titulo, videojuego);
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Obtiene un producto multimedia a partir del Titulo, ignora Mayuscula o Minuscula.
+     *
+     * @param titulo String Titulo de multimedia a buscar.
+     * @return Multimedia con el titulo correspondiente o null si no existe.
+     */
+    public Multimedia obtenerMultimediaPorTitulo(String titulo) {
+        for (Multimedia producto : productosMultimedia.values()) {
+            if (producto.getTitulo().equalsIgnoreCase(titulo)) {
+                return producto;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Permite añadir un nuevo socio al Map de Socios
+     *
+     * @param nif             String
+     * @param nombre          String
+     * @param fechaNacimiento LocalDate
+     * @param poblacion       String
+     * @return true se ha añadido correctamente a socios, false si no se ha podido añadir.
+     */
+    public boolean addSocio(String nif, String nombre, LocalDate fechaNacimiento, String poblacion) {
+        if (socios != null) {
+            Socio socio = new Socio(nif, nombre, fechaNacimiento, poblacion);
+            socios.put(nif, socio);
+            return true;
+        }
+        return false;
+    }
+
+    public Socio obtenerSocioPorNIF(String nif) {
+        return socios.get(nif);
+    }
+
+    /**
      * Permite calcular el recargo pendiente de pagar del socio.
      * Si el Socio tiene varios prestamos se obtienen todos estos recargos.
+     *
      * @return double el recargo pendiente de pagar.
      */
     public double calcularRecargosPendientes() {
         double recargosPendientes = 0;
-        for(Prestamo prestamo : prestamos) {
-            if(prestamo.getRecargo() > 0) {
+        for (Prestamo prestamo : prestamos) {
+            if (prestamo.getRecargo() > 0) {
                 recargosPendientes += prestamo.getRecargo();
             }
         }
