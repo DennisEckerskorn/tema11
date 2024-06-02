@@ -11,7 +11,7 @@ public class TiendaMultimedia {
     private Map<String, Socio> socios;
 
     public TiendaMultimedia() {
-        this.productosMultimedia = new TreeMap<>();
+        this.productosMultimedia = new HashMap<>();
         this.socios = new HashMap();
         addPeliculasAuto(CANTIDAD_INICIAL);
         addVideojuegoAuto(CANTIDAD_INICIAL);
@@ -169,6 +169,21 @@ public class TiendaMultimedia {
         Prestamo prestamo = new Prestamo(multimedia, socio);
         socio.addPrestamo(prestamo);
         return true;
+    }
+
+    public Collection<Multimedia> obtenerMultimediaCompleto() {
+        return productosMultimedia.values();
+    }
+
+    public List<Multimedia> obtenerPeliculasOrdenadasPorTitulo() {
+        List<Multimedia> peliculas = new ArrayList<>();
+        for(Multimedia multimedia : productosMultimedia.values()) {
+            if(multimedia instanceof Pelicula) {
+                peliculas.add(multimedia);
+            }
+        }
+        peliculas.sort(Comparator.comparing(Multimedia::getTitulo));
+        return peliculas;
     }
 
     public Map<String, Multimedia> getProductosMultimedia() {

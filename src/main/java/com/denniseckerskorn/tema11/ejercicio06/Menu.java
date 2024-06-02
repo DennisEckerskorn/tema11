@@ -7,6 +7,8 @@ import javax.swing.text.html.ListView;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeFormatterBuilder;
+import java.util.Collection;
+import java.util.List;
 
 public class Menu {
     private final TiendaMultimedia tiendaMultimedia;
@@ -55,7 +57,7 @@ public class Menu {
                 case 4: //Alquilar
                     alquilarMultimediaASocio();
                     break;
-                case 5: //Devolver
+                case 5: //TODO: Devolver
                     break;
                 case 6: //Listados
                     showSubMenu();
@@ -77,14 +79,17 @@ public class Menu {
             opcion = subMenu.mostrarMenuInt();
             switch (opcion) {
                 case 1:
+                    listaMultimediaCompleto();
                     break;
                 case 2:
+                    listaPeliculasOrdenadasPorTitulo();
                     break;
                 case 3:
                     break;
                 case 4:
                     break;
                 case 5:
+                    listaPrestamosSocio();
                     break;
                 case 6:
                     break;
@@ -207,5 +212,46 @@ public class Menu {
         System.out.println("El multimedia se ha alquilado al socio con éxito");
         System.out.println("Detalles del prestamo");
         System.out.println(prestamo);
+    }
+
+    //Devolver Multimedia
+
+    //Listado de todos los objetos multimedia
+    private void listaMultimediaCompleto() {
+        Collection<Multimedia> multimedia = tiendaMultimedia.obtenerMultimediaCompleto();
+        if (multimedia != null) {
+            System.out.println(multimedia.toString());
+        } else {
+            System.out.println("No hay productos...");
+        }
+    }
+
+
+    private void listaPeliculasOrdenadasPorTitulo() {
+        List<Multimedia> peliculas = tiendaMultimedia.obtenerPeliculasOrdenadasPorTitulo();
+        if (peliculas != null) {
+            System.out.println(peliculas.toString());
+        } else {
+            System.out.println("No hay Peliculas...");
+        }
+    }
+
+    private void listaPrestamosSocio() {
+        System.out.println("De que socio quieres mostrar los prestamos?");
+        String nif = LibIO.requestString("NIF del socio:", 9, 11);
+        Socio socio = tiendaMultimedia.obtenerSocioPorNIF(nif);
+        if (socio != null) {
+            System.out.println("Lista de préstamos del socio:");
+            List<Prestamo> prestamos = socio.getPrestamos();
+            if (!prestamos.isEmpty()) {
+                for (Prestamo prestamo : prestamos) {
+                    System.out.println(prestamo);
+                }
+            } else {
+                System.out.println("El socio no tiene prestamos registrados.");
+            }
+        } else {
+            System.out.println("No se ha encontrado al socio con NIF: " + nif);
+        }
     }
 }
