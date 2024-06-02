@@ -9,12 +9,10 @@ public class TiendaMultimedia {
     private static final int CANTIDAD_INICIAL = 10;
     private Map<String, Multimedia> productosMultimedia;
     private Map<String, Socio> socios;
-    private List<Prestamo> prestamos;
 
     public TiendaMultimedia() {
         this.productosMultimedia = new TreeMap<>();
         this.socios = new HashMap();
-        this.prestamos = new ArrayList<>();
         addPeliculasAuto(CANTIDAD_INICIAL);
         addVideojuegoAuto(CANTIDAD_INICIAL);
         addSociosAuto(CANTIDAD_INICIAL);
@@ -142,24 +140,35 @@ public class TiendaMultimedia {
         return false;
     }
 
+    /**
+     * Permite obtener al Socio a partir de su NIF
+     *
+     * @param nif String
+     * @return Socio encontrado con el NIF indicado.
+     */
     public Socio obtenerSocioPorNIF(String nif) {
         return socios.get(nif);
     }
 
     /**
-     * Permite calcular el recargo pendiente de pagar del socio.
-     * Si el Socio tiene varios prestamos se obtienen todos estos recargos.
+     * Permite añadir un prestamo de un multimedia a un socio
      *
-     * @return double el recargo pendiente de pagar.
+     * @param multimedia Multimedia
+     * @param socio      Socio
+     * @return true se ha creado un prestamo.
      */
-    public double calcularRecargosPendientes() {
-        double recargosPendientes = 0;
-        for (Prestamo prestamo : prestamos) {
-            if (prestamo.getRecargo() > 0) {
-                recargosPendientes += prestamo.getRecargo();
-            }
+    public boolean alquilarMultimediaASocio(Multimedia multimedia, Socio socio) {
+        if (multimedia == null || socio == null) {
+            return false;
         }
-        return recargosPendientes;
+
+        if (socio.calcularRecargosPendientes() > 0) {
+            return false;
+        }
+
+        Prestamo prestamo = new Prestamo(multimedia, socio);
+        socio.addPrestamo(prestamo);
+        return true;
     }
 
     public Map<String, Multimedia> getProductosMultimedia() {
@@ -168,10 +177,6 @@ public class TiendaMultimedia {
 
     public Map<String, Socio> getSocios() {
         return socios;
-    }
-
-    public List<Prestamo> getPrestamos() {
-        return prestamos;
     }
 
     @Override
@@ -195,7 +200,6 @@ public class TiendaMultimedia {
         return "TiendaMultimedia{" +
                 "productosMultimedia=" + productosMultimedia +
                 ", socios=" + socios +
-                ", prestamos=" + prestamos +
                 '}';
     }
 }

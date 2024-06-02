@@ -13,15 +13,17 @@ public class Prestamo {
     private static int nextID = 0;
     private final int id;
     private final Multimedia multimedia;
+    private final Socio socio;
     private final LocalDate fechaInicio;
     private final LocalDate fechaDevolucion;
     private final int diasLimite;
     private final double recargo;
     private final double precioFinal;
 
-    public Prestamo(Multimedia multimedia) {
+    public Prestamo(Multimedia multimedia, Socio socio) {
         this.id = ++nextID;
         this.multimedia = multimedia;
+        this.socio = socio;
         this.fechaInicio = LocalDate.now();
         this.fechaDevolucion = fechaInicio.plusDays(DIAS_LIMITE);
         this.diasLimite = DIAS_LIMITE;
@@ -115,6 +117,7 @@ public class Prestamo {
         return "Prestamo{" +
                 "id=" + id +
                 ", multimedia=" + multimedia +
+                ", socio=" + socio +
                 ", fechaInicio=" + fechaInicio +
                 ", fechaDevolucion=" + fechaDevolucion +
                 ", diasLimite=" + diasLimite +

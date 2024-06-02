@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Socio {
+    private List<Prestamo> prestamos;
     private final String nif;
     private final String nombre;
     private final LocalDate fechaNacimiento;
@@ -14,6 +15,7 @@ public class Socio {
 
 
     public Socio(String nif, String nombre, LocalDate fechaNacimiento, String poblacion) throws IllegalArgumentException {
+        this.prestamos = new ArrayList<>();
         this.nif = nif;
         this.nombre = nombre;
         this.fechaNacimiento = fechaNacimiento;
@@ -49,7 +51,23 @@ public class Socio {
         return edad;
     }
 
+    public List<Prestamo> getPrestamos() {
+        return prestamos;
+    }
 
+    public double calcularRecargosPendientes() {
+        double recargosPendiente = 0;
+        for (Prestamo prestamo : prestamos) {
+            if (prestamo.getRecargo() > 0) {
+                recargosPendiente += prestamo.getRecargo();
+            }
+        }
+        return recargosPendiente;
+    }
+
+    public boolean addPrestamo(Prestamo prestamo) {
+        return prestamos.add(prestamo);
+    }
 
     @Override
     public boolean equals(Object o) {

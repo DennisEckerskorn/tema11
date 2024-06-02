@@ -53,6 +53,7 @@ public class Menu {
                     addSocio();
                     break;
                 case 4: //Alquilar
+                    alquilarMultimediaASocio();
                     break;
                 case 5: //Devolver
                     break;
@@ -167,8 +168,44 @@ public class Menu {
     }
 
 
-    private void alquilarMultimedia() {
-        String titulo = LibIO.requestString("Introduce el título:", 3, 40);
+    private void alquilarMultimediaASocio() {
+        System.out.println("Alquilar multimedia a Socio, rellena la información:");
 
+        String titulo = LibIO.requestString("Título del producto Multimedia:", 3, 20);
+        Multimedia multimedia = tiendaMultimedia.obtenerMultimediaPorTitulo(titulo);
+
+        if (multimedia != null) {
+            System.out.println("Se ha encontrado el producto con título: " + titulo);
+            System.out.println(multimedia);
+        } else {
+            System.out.println("No se ha podido encontrar al producto con el título: " + titulo);
+            return;
+        }
+
+        String nif = LibIO.requestString("NIF del socio:", 9, 11);
+        Socio socio = tiendaMultimedia.obtenerSocioPorNIF(nif);
+
+        if (socio != null) {
+            System.out.println("Se ha encontrado al socio con NIF: " + nif);
+            System.out.println(socio);
+        } else {
+            System.out.println("No se ha encontrado al socio con NIF: " + nif);
+            return;
+        }
+
+        double recargoSocio = socio.calcularRecargosPendientes();
+        if (recargoSocio > 0) {
+            System.out.println("El socio tiene recargos pendientes de pagar. Antes de alquilar paga los recargos!!!");
+            return;
+        }
+
+        //Crear el prestamo:
+        Prestamo prestamo = new Prestamo(multimedia, socio);
+        //Añadir el prestamo al socio:
+        socio.addPrestamo(prestamo);
+
+        System.out.println("El multimedia se ha alquilado al socio con éxito");
+        System.out.println("Detalles del prestamo");
+        System.out.println(prestamo);
     }
 }
