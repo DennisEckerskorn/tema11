@@ -3,6 +3,9 @@ package com.denniseckerskorn.tema11.ejercicio06;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 
+/**
+ * Clase que representa un préstamo de un producto multimedia a un socio.
+ */
 public class Prestamo {
     private static final int DIAS_LIMITE = 3;
     private static double PRECIO_BASE = 4.0;
@@ -20,6 +23,12 @@ public class Prestamo {
     private final double recargo;
     private final double precioFinal;
 
+    /**
+     * Constructor de la clase Prestamo.
+     *
+     * @param multimedia El producto multimedia que se presta.
+     * @param socio El socio que solicita el préstamo.
+     */
     public Prestamo(Multimedia multimedia, Socio socio) {
         this.id = ++nextID;
         this.multimedia = multimedia;
@@ -32,11 +41,11 @@ public class Prestamo {
     }
 
     /**
-     * Permite calcular el recargo que tiene cada prestamo.
-     * Primero se comprueban los dias que han pasado desde el prestamo hasta la fecha de devolucion.
+     * Permite calcular el recargo que tiene cada préstamo.
+     * Primero se comprueban los días que han pasado desde el préstamo hasta la fecha de devolución.
      * Si el retraso es mayor que cero se obtiene el recargo a pagar.
      *
-     * @return double recargo por el prestamo.
+     * @return double recargo por el préstamo.
      */
     public double calcularRecargo() {
         long diasRetraso = ChronoUnit.DAYS.between(fechaDevolucion, LocalDate.now());
@@ -48,11 +57,11 @@ public class Prestamo {
     }
 
     /**
-     * Permite calcular el precio final del prestamo.
-     * Si el producto multimedia es una Pelicula o un Videojuego y cumple la antiguedad,
-     * se aplica un descuento a precio final.
+     * Permite calcular el precio final del préstamo.
+     * Si el producto multimedia es una Película o un Videojuego y cumple la antigüedad,
+     * se aplica un descuento al precio final.
      *
-     * @return double la suma del precio obtenido y el recargo pendiente del prestamo.
+     * @return double la suma del precio base y el recargo pendiente del préstamo.
      */
     private double calcularPrecioFinalPrestamo() {
         double precio = PRECIO_BASE;

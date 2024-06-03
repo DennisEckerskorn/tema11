@@ -2,12 +2,25 @@ package com.denniseckerskorn.tema11.ejercicio06;
 
 import java.util.Objects;
 
+/**
+ * Clase que representa una película, hereda de la clase Multimedia.
+ */
 public class Pelicula extends Multimedia{
     private final float duracion;
     private final String actor;
     private final String actriz;
 
-
+    /**
+     * Constructor que inicializa una nueva película.
+     *
+     * @param titulo   El título de la película.
+     * @param autor    El autor de la película.
+     * @param anyo     El año de la película.
+     * @param formato  El formato de la película.
+     * @param duracion La duración de la película en minutos.
+     * @param actor    El actor principal de la película.
+     * @param actriz   La actriz principal de la película.
+     */
     public Pelicula(String titulo, String autor, String anyo, Formato formato, float duracion, String actor, String actriz) {
         super(titulo, autor, anyo, formato);
         this.duracion = duracion;

@@ -20,6 +20,9 @@ public class Menu {
         mainMenu = new ConsoleMenu("MENÚ PRINCIPAL");
         subMenu = new ConsoleMenu("MENÚ LISTADOS");
 
+        /**
+         * Opciones del Menú Principal
+         */
         mainMenu.addOpcion("Alta de una nueva Película");
         mainMenu.addOpcion("Alta de un nuevo Videojuego");
         mainMenu.addOpcion("Alta de un nuevo socio");
@@ -28,6 +31,9 @@ public class Menu {
         mainMenu.addOpcion("Listados");
         mainMenu.addOpcion("Salir");
 
+        /**
+         * Opciones del sub menú Listados
+         */
         subMenu.addOpcion("Listado de todos los objetos multimedia");
         subMenu.addOpcion("Listado de todas las peliculas ordenadas por título");
         subMenu.addOpcion("Listado de todos los videojuegos ordenados por años");
@@ -40,6 +46,9 @@ public class Menu {
         showMainMenu();
     }
 
+    /**
+     * Switch para las opciones del menú principal.
+     */
     private void showMainMenu() {
         int opcion = -1;
         do {
@@ -74,6 +83,9 @@ public class Menu {
         } while (opcion != 7);
     }
 
+    /**
+     * Switch para las opciones del submenú
+     */
     private void showSubMenu() {
         int opcion = -1;
         do {
@@ -162,6 +174,8 @@ public class Menu {
 
     /**
      * Permite añadir un nuevo socio a la lista de socios
+     * Comprueba si el socio ya existe mediante su NIF
+     * Pide el resto de los datos si el socio no existe aún, de lo contrario saldrá del método
      */
     private void addSocio() {
         System.out.println("Añadir un Socio nuevo, rellena la información:");
@@ -185,7 +199,10 @@ public class Menu {
     }
 
     /**
-     * Permite alquilar un producto multimedia
+     * Permite alquilar un producto multimedia.
+     * Se busca y asigna el producto multimedia si existe mediante su título.
+     * Se busca y asigna al socio, si existe se asigna al socio mediante su NIF.
+     * Crea un préstamo con el producto multimedia y el socio correspondiente.
      */
     private void alquilarMultimediaASocio() {
         System.out.println("Alquilar multimedia a Socio, rellena la información:");
@@ -218,18 +235,17 @@ public class Menu {
             return;
         }
 
-        //Crear el prestamo:
-        Prestamo prestamo = new Prestamo(multimedia, socio);
-        //Añadir el prestamo al socio:
-        socio.addPrestamo(prestamo);
-
-        System.out.println("El multimedia se ha alquilado al socio con éxito");
-        System.out.println("Detalles del prestamo");
-        System.out.println(prestamo);
+        if (tiendaMultimedia.alquilarMultimediaASocio(multimedia, socio)) {
+            System.out.println("El préstamo se ha realizado con éxito.");
+        } else {
+            System.out.println("No se ha podido realizar el préstamo.");
+        }
     }
 
     /**
      * Permite devolver un producto multimedia prestado por un socio.
+     * Busca el producto multimedia y el socio por sus respectivos identificadores,
+     * y luego procesa la devolución del producto.
      */
     private void devolverMultimedia() {
         System.out.println("Devolver multimedia prestado por un socio, rellena la información:");
@@ -260,7 +276,9 @@ public class Menu {
     }
 
 
-    //Listado de todos los objetos multimedia
+    /**
+     * Muestra la lista completa de todos los objetos multimedia en la tienda.
+     */
     private void listaMultimediaCompleto() {
         Collection<Multimedia> multimedia = tiendaMultimedia.obtenerMultimediaCompleto();
         if (multimedia != null) {
@@ -270,7 +288,9 @@ public class Menu {
         }
     }
 
-
+    /**
+     * Muestra la lista de películas ordenadas por título.
+     */
     private void listaPeliculasOrdenadasPorTitulo() {
         List<Multimedia> peliculas = tiendaMultimedia.obtenerPeliculasOrdenadasPorTitulo();
         if (peliculas != null) {
@@ -280,6 +300,9 @@ public class Menu {
         }
     }
 
+    /**
+     * Muestra la lista de videojuegos ordenados por año.
+     */
     private void listaVideoJuegosOrdenadasPorAnyo() {
         List<Multimedia> videojuegos = tiendaMultimedia.obtenerVidejuegosPorAnyo();
         if (videojuegos != null) {
@@ -289,6 +312,9 @@ public class Menu {
         }
     }
 
+    /**
+     * Muestra la lista de préstamos ordenados por fecha.
+     */
     private void listaAlquileresSocioOrdenadosPorFecha() {
         List<Prestamo> historicoPrestamos = tiendaMultimedia.obtenerHistoricoPrestamosPorFecha();
         if (historicoPrestamos != null) {
@@ -298,6 +324,9 @@ public class Menu {
         }
     }
 
+    /**
+     * Muestra la lista de socios que tienen recargos pendientes.
+     */
     private void listaSociosConRecargosPendientes() {
         List<Socio> sociosRecargosPendientes = tiendaMultimedia.obtenerSociosConRecargosPendientes();
         if (sociosRecargosPendientes != null) {
@@ -307,6 +336,10 @@ public class Menu {
         }
     }
 
+    /**
+     * Muestra la lista de préstamos de un socio específico.
+     * Pide el NIF del socio y muestra sus préstamos.
+     */
     private void listaPrestamosSocio() {
         System.out.println("De que socio quieres mostrar los prestamos?");
         String nif = LibIO.requestString("NIF del socio:", 9, 11);

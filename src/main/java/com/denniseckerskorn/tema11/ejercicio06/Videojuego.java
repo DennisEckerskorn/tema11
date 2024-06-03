@@ -2,9 +2,21 @@ package com.denniseckerskorn.tema11.ejercicio06;
 
 import java.util.Objects;
 
+/**
+ * Clase que representa un videojuego, que es un tipo de multimedia.
+ */
 public class Videojuego extends Multimedia {
     private final Plataforma plataforma;
 
+    /**
+     * Constructor de la clase Videojuego.
+     *
+     * @param titulo     El título del videojuego.
+     * @param autor      El autor del videojuego.
+     * @param anyo       El año de lanzamiento del videojuego.
+     * @param formato    El formato del videojuego.
+     * @param plataforma La plataforma en la que se juega el videojuego.
+     */
     public Videojuego(String titulo, String autor, String anyo, Formato formato, Plataforma plataforma) {
         super(titulo, autor, anyo, formato);
         this.plataforma = plataforma;

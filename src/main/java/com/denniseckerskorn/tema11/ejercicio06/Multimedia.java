@@ -2,12 +2,23 @@ package com.denniseckerskorn.tema11.ejercicio06;
 
 import java.util.Objects;
 
+/**
+ * Clase abstracta que representa un producto multimedia.
+ */
 public abstract class Multimedia {
     private String titulo;
     private String autor;
     private String anyo;
     private Formato formato;
 
+    /**
+     * Constructor de la clase Multimedia.
+     *
+     * @param titulo  El título del producto multimedia.
+     * @param autor   El autor del producto multimedia.
+     * @param anyo    El año de lanzamiento del producto multimedia.
+     * @param formato El formato del producto multimedia.
+     */
     public Multimedia(String titulo, String autor, String anyo, Formato formato) {
         this.titulo = titulo;
         this.autor = autor;

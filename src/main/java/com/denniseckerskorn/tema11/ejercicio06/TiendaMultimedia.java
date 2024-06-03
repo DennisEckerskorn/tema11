@@ -151,11 +151,11 @@ public class TiendaMultimedia {
     }
 
     /**
-     * Permite añadir un prestamo de un multimedia a un socio
+     * Permite añadir un préstamo de un multimedia a un socio.
      *
-     * @param multimedia Multimedia
-     * @param socio      Socio
-     * @return true se ha creado un prestamo.
+     * @param multimedia El producto multimedia que se va a prestar.
+     * @param socio El socio al que se le va a prestar el producto multimedia.
+     * @return true si se ha creado un préstamo exitosamente, false en caso contrario.
      */
     public boolean alquilarMultimediaASocio(Multimedia multimedia, Socio socio) {
         if (multimedia == null || socio == null) {

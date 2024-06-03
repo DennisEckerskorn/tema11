@@ -4,6 +4,9 @@ import java.time.LocalDate;
 import java.time.Period;
 import java.util.*;
 
+/**
+ * Clase que representa un socio en la tienda de multimedia.
+ */
 public class Socio {
     private List<Prestamo> prestamos;
     private final String nif;
@@ -13,7 +16,15 @@ public class Socio {
     private final int edad;
     private double recargosPendientes;
 
-
+    /**
+     * Constructor que inicializa un nuevo socio.
+     *
+     * @param nif             El NIF del socio.
+     * @param nombre          El nombre del socio.
+     * @param fechaNacimiento La fecha de nacimiento del socio.
+     * @param poblacion       La población del socio.
+     * @throws IllegalArgumentException si el socio es menor de edad.
+     */
     public Socio(String nif, String nombre, LocalDate fechaNacimiento, String poblacion) throws IllegalArgumentException {
         this.prestamos = new ArrayList<>();
         this.nif = nif;
@@ -27,6 +38,11 @@ public class Socio {
         }
     }
 
+    /**
+     * Calcula la edad del socio basándose en su fecha de nacimiento.
+     *
+     * @return La edad del socio.
+     */
     private int calcularEdad() {
         LocalDate now = LocalDate.now();
         return Period.between(fechaNacimiento, now).getYears();
@@ -62,12 +78,18 @@ public class Socio {
 
     /**
      * Permite establecer el total de recargos pendientes para el socio.
-     * @param recargosPendientes el total de recargos pendientes a establecer.
+     *
+     * @param recargosPendientes El total de recargos pendientes a establecer.
      */
     public void setRecargosPendientes(double recargosPendientes) {
         this.recargosPendientes = recargosPendientes;
     }
 
+    /**
+     * Calcula los recargos pendientes del socio sumando los recargos de todos sus préstamos.
+     *
+     * @return El total de recargos pendientes.
+     */
     public double calcularRecargosPendientes() {
         double recargosPendiente = 0;
         for (Prestamo prestamo : prestamos) {
@@ -78,6 +100,12 @@ public class Socio {
         return recargosPendiente;
     }
 
+    /**
+     * Añade un préstamo a la lista de préstamos del socio.
+     *
+     * @param prestamo El préstamo a añadir.
+     * @return true si el préstamo se añadió correctamente, false en caso contrario.
+     */
     public boolean addPrestamo(Prestamo prestamo) {
         return prestamos.add(prestamo);
     }

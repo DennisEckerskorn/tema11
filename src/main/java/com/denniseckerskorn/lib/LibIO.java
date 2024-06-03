@@ -2,6 +2,8 @@ package com.denniseckerskorn.lib;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.Period;
+import java.time.ZoneId;
 import java.time.format.DateTimeParseException;
 import java.util.Date;
 import java.util.NoSuchElementException;
@@ -481,6 +483,14 @@ public class LibIO {
         return fecha;
     }
 
+    /**
+     * Solicita al usuario que seleccione un valor de un enumerado y devuelve el valor seleccionado.
+     *
+     * @param <E>       El tipo del enumerado.
+     * @param prompt    El mensaje a mostrar al usuario.
+     * @param enumClass La clase del enumerado.
+     * @return El valor del enumerado seleccionado por el usuario.
+     */
     public static <E> E requestEnum(String prompt, Class<E> enumClass) {
         E[] enumConstants = enumClass.getEnumConstants();
         System.out.println(prompt);
@@ -509,6 +519,36 @@ public class LibIO {
         return enumConstants[0];
     }
 
-    //TODO: Añador un metodo que calcula la edad a partir de date y de localdate
+    /**
+     * Calcula la edad a partir de una fecha de nacimiento proporcionada como java.util.Date.
+     *
+     * @param birthDate La fecha de nacimiento como java.util.Date.
+     * @return La edad calculada en años.
+     */
+    public static int calculateAge(Date birthDate) {
+        LocalDate localBirthDate = convertToLocalDate(birthDate);
+        return calculateAge(localBirthDate);
+    }
+
+    /**
+     * Calcula la edad a partir de una fecha de nacimiento proporcionada como java.time.LocalDate.
+     *
+     * @param birthDate La fecha de nacimiento como java.time.LocalDate.
+     * @return La edad calculada en años.
+     */
+    public static int calculateAge(LocalDate birthDate) {
+        LocalDate now = LocalDate.now();
+        return Period.between(birthDate, now).getYears();
+    }
+
+    /**
+     * Convierte un java.util.Date a java.time.LocalDate.
+     *
+     * @param date La fecha a convertir.
+     * @return La fecha convertida como java.time.LocalDate.
+     */
+    private static LocalDate convertToLocalDate(Date date) {
+        return date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+    }
 }
 
