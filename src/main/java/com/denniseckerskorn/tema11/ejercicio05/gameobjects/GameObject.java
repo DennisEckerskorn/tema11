@@ -45,7 +45,6 @@ public abstract class GameObject {
     public String toString() {
         return "GameObjects{" +
                 "nombre='" + nombre + '\'' +
-                ", apilable=" + apilable +
                 ", maxCantidad=" + maxCantidad +
                 '}';
     }

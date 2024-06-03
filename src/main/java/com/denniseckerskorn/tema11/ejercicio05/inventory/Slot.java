@@ -16,29 +16,36 @@ public class Slot {
     public boolean addObjectToStack(GameObject gameObject) {
         if (gameObjects.isEmpty()) {
             this.maxStack = gameObject.getMaxCantidad();
-            if (gameObject.getMaxCantidad() == 1 && !gameObject.isApilable()) {
-                return !gameObjects.contains(gameObject);
-            } else {
+            gameObjects.push(gameObject);
+            return true;
+        }
+        if (gameObject.isApilable() && gameObjects.size() < maxStack) {
+            if (gameObjects.peek().equals(gameObject)) {
                 gameObjects.push(gameObject);
                 return true;
             }
-        } else if (gameObjects.size() < gameObject.getMaxCantidad()) {
-            gameObjects.push(gameObject);
-            return true;
         }
         return false;
     }
 
     public boolean removeObjectFromStack(GameObject gameObject) {
-        if (!gameObjects.isEmpty()) {
-            gameObjects.remove(gameObject);
-            return true;
-        }
-        return false;
+        return gameObjects.remove(gameObject);
     }
 
     public Stack<GameObject> getGameObjects() {
         return gameObjects;
+    }
+
+    public boolean isEmpty() {
+        return gameObjects.isEmpty();
+    }
+
+    public boolean isSameType(GameObject gameObject) {
+        return !gameObjects.isEmpty() && gameObjects.peek().equals(gameObject);
+    }
+
+    public int getCurrentSize() {
+        return gameObjects.size();
     }
 
     @Override
