@@ -1,5 +1,9 @@
 package com.denniseckerskorn.tema11.ejercicio06;
 
+import com.denniseckerskorn.tema11.ejercicio06.multimedia.Multimedia;
+import com.denniseckerskorn.tema11.ejercicio06.multimedia.Pelicula;
+import com.denniseckerskorn.tema11.ejercicio06.multimedia.Videojuego;
+
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 

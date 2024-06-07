@@ -1,11 +1,13 @@
-package com.denniseckerskorn.tema11.ejercicio06;
+package com.denniseckerskorn.tema11.ejercicio06.multimedia;
+
+import com.denniseckerskorn.tema11.ejercicio06.Formato;
 
 import java.util.Objects;
 
 /**
  * Clase que representa una película, hereda de la clase Multimedia.
  */
-public class Pelicula extends Multimedia{
+public class Pelicula extends Multimedia {
     private final float duracion;
     private final String actor;
     private final String actriz;

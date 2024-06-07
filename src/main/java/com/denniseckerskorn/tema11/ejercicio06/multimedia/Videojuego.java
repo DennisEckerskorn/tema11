@@ -1,4 +1,7 @@
-package com.denniseckerskorn.tema11.ejercicio06;
+package com.denniseckerskorn.tema11.ejercicio06.multimedia;
+
+import com.denniseckerskorn.tema11.ejercicio06.Formato;
+import com.denniseckerskorn.tema11.ejercicio06.Plataforma;
 
 import java.util.Objects;
 
