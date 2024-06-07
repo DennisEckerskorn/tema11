@@ -1,8 +1,6 @@
 package com.denniseckerskorn.tema11.ejercicio06;
 
-import com.denniseckerskorn.tema11.ejercicio06.multimedia.Multimedia;
-import com.denniseckerskorn.tema11.ejercicio06.multimedia.Pelicula;
-import com.denniseckerskorn.tema11.ejercicio06.multimedia.Videojuego;
+import com.denniseckerskorn.tema11.ejercicio06.multimedia.*;
 import net.datafaker.Faker;
 
 import java.time.LocalDate;

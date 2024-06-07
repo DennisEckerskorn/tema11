@@ -1,4 +1,4 @@
-package com.denniseckerskorn.tema11.ejercicio06;
+package com.denniseckerskorn.tema11.ejercicio06.multimedia;
 
 /**
  * Enumeración que representa las diferentes plataformas en las que puede estar disponible un videojuego.
