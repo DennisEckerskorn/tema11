@@ -1,4 +1,4 @@
 package com.denniseckerskorn.tema11.ejercicio07.zonas;
 
-public class ZonaVIP {
+public class ZonaVIP extends Zona{
 }

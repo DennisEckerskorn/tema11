@@ -16,9 +16,9 @@ public class Main {
         //App app = new App();
         //ShowInfo showInfo = new ShowInfo();
 
-        Menu menu = new Menu();
+        //Menu menu = new Menu();
         //InventoryMenu inventoryMenu = new InventoryMenu();
-        /*
+
         Zona zona = new ZonaNormal();
         String test1 = zona.printSeatMatrix();
         System.out.println(test1);
@@ -26,6 +26,6 @@ public class Main {
         String test2 = zona.printSeatMatrix();
         System.out.println(test2);
 
-         */
+
     }
 }
