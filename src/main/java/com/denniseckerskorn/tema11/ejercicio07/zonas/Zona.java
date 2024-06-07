@@ -61,18 +61,38 @@ public abstract class Zona {
     }
 
     /**
-     * Genera una matriz con los asientos de cada fila
-     * @return matriz con los asientos por filas.
+     * Permite imprimir una matriz con las filas y sus asientos.
+     * Permite ver el numero de Asiento y si esta ocupado o no.
+     * @return String con la matriz de asientos libres o ocupados.
      */
-    public Asiento[][] getSeatMatrix() {
-        Asiento[][] matrix = new Asiento[numFilas][numAsientos];
-        for(int i = 1; i <= numFilas; i++) {
-            for(int j = 1; j <= numAsientos; j++) {
+    public String printSeatMatrix() {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 1; i <= numFilas; i++) {
+            sb.append("Fila ").append(i).append(": ");
+            for (int j = 1; j <= numAsientos; j++) {
                 String key = generateKey(i, j);
-                matrix[i -1][j -1] = asientos.get(key);
+                Asiento asiento = asientos.get(key);
+                if (asiento != null) {
+                    if (asiento.isOcupado()) {
+                        sb.append(asiento);
+                    } else {
+                        sb.append(asiento);
+                    }
+                }
             }
+            sb.append("\n");
         }
-        return matrix;
+        return sb.toString();
+    }
+
+    public boolean ocuparAsiento(int fila, int asiento) {
+        String key = generateKey(fila, asiento);
+        Asiento a = getAsientos().get(key);
+        if(a != null && !a.isOcupado()){
+            a.setOcupado(true);
+            return true;
+        }
+        return false;
     }
 
     public int getId() {

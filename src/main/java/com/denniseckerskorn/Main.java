@@ -6,6 +6,7 @@ import com.denniseckerskorn.tema11.ejercicio04.Lavadora;
 import com.denniseckerskorn.tema11.ejercicio04.ShowInfo;
 import com.denniseckerskorn.tema11.ejercicio05.inventory.InventoryMenu;
 import com.denniseckerskorn.tema11.ejercicio06.Menu;
+import com.denniseckerskorn.tema11.ejercicio07.Asiento;
 import com.denniseckerskorn.tema11.ejercicio07.zonas.Zona;
 import com.denniseckerskorn.tema11.ejercicio07.zonas.ZonaNormal;
 
@@ -17,10 +18,11 @@ public class Main {
 
         //Menu menu = new Menu();
         //InventoryMenu inventoryMenu = new InventoryMenu();
-
-        Zona zonaNormal = new ZonaNormal(10, 10);
-        zonaNormal.getAsientos().forEach((key, value) -> {
-            System.out.println("Fila - Columna: " + key + ", Asiento: " + value);
-        });
+        Zona zona = new ZonaNormal();
+        String test1 = zona.printSeatMatrix();
+        System.out.println(test1);
+        zona.ocuparAsiento(4, 1);
+        String test2 = zona.printSeatMatrix();
+        System.out.println(test2);
     }
 }
