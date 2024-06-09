@@ -14,19 +14,19 @@ public class Partido {
     private final String nombreEquipoLocal;
     private final String nombreEquipoVisitante;
     private TipoPartido tipoPartido;
-    private List<Estadio> estadios;
-    //private Entrada entrada;
+    private Estadio estadios;
+    private List<Entrada> entradas;
     private LocalDate fechaPartido;
 
-    public Partido(String nombreEquipoLocal, String nombreEquipoVisitante, TipoPartido tipoPartido, String fechaPartido) throws DateTimeParseException {
+    public Partido(String nombreEquipoLocal, String nombreEquipoVisitante, TipoPartido tipoPartido, Estadio estadio, String fechaPartido) throws DateTimeParseException {
         this.id = ++nextID;
         this.nombreEquipoLocal = nombreEquipoLocal;
         this.nombreEquipoVisitante = nombreEquipoVisitante;
         this.tipoPartido = tipoPartido;
-        this.estadios = new ArrayList<>();
-        //this.entrada = ;
+        this.estadios = estadio;
+        this.entradas = new ArrayList<>();
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        this.fechaPartido = LocalDate.parse(fechaPartido);
+        this.fechaPartido = LocalDate.parse(fechaPartido, dtf);
     }
 
     public int getId() {
@@ -45,7 +45,7 @@ public class Partido {
         return tipoPartido;
     }
 
-    public List<Estadio> getEstadios() {
+    public Estadio getEstadios() {
         return estadios;
     }
 
@@ -75,6 +75,7 @@ public class Partido {
                 ", nombreEquipoVisitante='" + nombreEquipoVisitante + '\'' +
                 ", tipoPartido=" + tipoPartido +
                 ", estadios=" + estadios +
+                ", entradas=" + entradas +
                 ", fechaPartido=" + fechaPartido +
                 '}';
     }

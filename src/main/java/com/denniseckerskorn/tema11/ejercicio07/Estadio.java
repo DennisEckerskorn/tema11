@@ -1,5 +1,8 @@
 package com.denniseckerskorn.tema11.ejercicio07;
 
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -9,11 +12,13 @@ public class Estadio {
     private final int id;
     private final String nombre;
     private final Map<TipoZona, Zona> mapZonas;
+    private final List<Partido> partidos;
 
-    public Estadio(int id, String nombre) {
+    public Estadio(String nombre) {
         this.id = ++nextID;
         this.nombre = nombre;
         this.mapZonas = new HashMap<>();
+        this.partidos = new ArrayList<>();
     }
 
     public static int getNextID() {
