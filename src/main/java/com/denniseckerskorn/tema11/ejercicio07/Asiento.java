@@ -2,13 +2,23 @@ package com.denniseckerskorn.tema11.ejercicio07;
 
 public class Asiento {
     private final int numAsiento;
+    private boolean ocupado;
 
-    public Asiento(int numAsiento) {
+    public Asiento(int numAsiento, boolean ocupado) {
         this.numAsiento = numAsiento;
+        this.ocupado = ocupado;
     }
 
     public int getNumAsiento() {
         return numAsiento;
+    }
+
+    public boolean isOcupado() {
+        return ocupado;
+    }
+
+    public void setOcupado(boolean ocupado) {
+        this.ocupado = ocupado;
     }
 
     @Override
@@ -27,8 +37,13 @@ public class Asiento {
 
     @Override
     public String toString() {
-        return "Asiento{" +
-                "numAsiento=" + numAsiento +
-                '}';
+        StringBuilder sb = new StringBuilder();
+        sb.append("Asiento: ").append(numAsiento);
+        if(isOcupado()) {
+            sb.append(" - Ocupado");
+        } else {
+            sb.append(" - Libre");
+        }
+        return sb.toString();
     }
 }
