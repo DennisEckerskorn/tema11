@@ -11,7 +11,7 @@ public class Estadio {
     private static int nextID = 0;
     private final int id;
     private final String nombre;
-    private final Map<TipoZona, Zona> mapZonas;
+    private final Map<Integer, Zona> mapZonas; //Usar zoneID para la clave
     private final List<Partido> partidos;
 
     public Estadio(String nombre) {
@@ -33,7 +33,7 @@ public class Estadio {
         return nombre;
     }
 
-    public Map<TipoZona, Zona> getMapZonas() {
+    public Map<Integer, Zona> getMapZonas() {
         return mapZonas;
     }
 
