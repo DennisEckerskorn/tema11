@@ -1,5 +1,6 @@
 package com.denniseckerskorn;
 
+import com.denniseckerskorn.tema11.ejercicio07.Estadio;
 import com.denniseckerskorn.tema11.ejercicio07.TipoZona;
 import com.denniseckerskorn.tema11.ejercicio07.Zona;
 
@@ -12,8 +13,7 @@ public class Main {
         //Menu menu = new Menu();
         //InventoryMenu inventoryMenu = new InventoryMenu();
 
-        Zona zona = new Zona(TipoZona.ZONA_NORMAL, 10.00);
-        System.out.println(zona);
+
 
     }
 }

@@ -8,6 +8,8 @@ import java.util.Map;
 import java.util.Objects;
 
 public class Estadio {
+    private final static int DEFAULT_ZONAS_NORMALES = 10;
+    private final static int DEFAULT_ZONAS_VIP = 10;
     private static int nextID = 0;
     private final int id;
     private final String nombre;
@@ -19,6 +21,18 @@ public class Estadio {
         this.nombre = nombre;
         this.mapZonas = new HashMap<>();
         this.partidos = new ArrayList<>();
+
+        for (int i = 0; i < DEFAULT_ZONAS_NORMALES; i++) {
+            Zona zonaNormal = new Zona(TipoZona.ZONA_NORMAL, 10.00);
+            mapZonas.put(zonaNormal.getZoneID(), zonaNormal);
+        }
+
+        for (int i = 0; i < DEFAULT_ZONAS_VIP; i++) {
+            Zona zonaVIP = new Zona(TipoZona.ZONA_VIP, 20.00);
+            mapZonas.put(zonaVIP.getZoneID(), zonaVIP);
+        }
+
+
     }
 
     public static int getNextID() {
@@ -60,6 +74,7 @@ public class Estadio {
                 "id=" + id +
                 ", nombre='" + nombre + '\'' +
                 ", mapZonas=" + mapZonas +
+                ", partidos=" + partidos +
                 '}';
     }
 }
