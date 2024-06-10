@@ -2,6 +2,7 @@ package com.denniseckerskorn.tema11.ejercicio07;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class Zona {
     private final static int DEFAULT_FILAS = 10;
@@ -13,12 +14,25 @@ public class Zona {
 
     public Zona(TipoZona tipoZona, double precioBase) {
         this.zoneID = ++nextID;
-        filas = new ArrayList<>(DEFAULT_FILAS);
+        this.filas = new ArrayList<>(DEFAULT_FILAS);
         this.tipoZona = tipoZona;
         this.precioBase = precioBase;
 
         for (int i = 1; i <= DEFAULT_FILAS; i++) {
             filas.add(new Fila(i));
+        }
+    }
+
+    public int getRandomFila() {
+        return new Random().nextInt(filas.size());
+    }
+
+    public int getRandomAsiento(int filaIndex) throws IllegalArgumentException{
+        if (filaIndex >= 0 && filaIndex < filas.size()) {
+            Fila fila = filas.get(filaIndex);
+            return fila.getRandomAsiento();
+        } else {
+            throw new IllegalArgumentException("Invalid row index: " + filaIndex);
         }
     }
 

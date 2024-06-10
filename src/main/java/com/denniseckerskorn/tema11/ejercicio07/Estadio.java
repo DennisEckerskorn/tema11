@@ -1,15 +1,16 @@
 package com.denniseckerskorn.tema11.ejercicio07;
 
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
+import com.denniseckerskorn.tema11.ejercicio07.entradas.Entrada;
+import com.denniseckerskorn.tema11.ejercicio07.entradas.EntradaNormal;
+
+import java.time.format.DateTimeParseException;
+import java.util.*;
 
 public class Estadio {
     private final static int DEFAULT_ZONAS_NORMALES = 10;
     private final static int DEFAULT_ZONAS_VIP = 10;
+    private final static int DEFAULT_PARTIDOS = 3;
     private static int nextID = 0;
     private final int id;
     private final String nombre;
@@ -22,17 +23,53 @@ public class Estadio {
         this.mapZonas = new HashMap<>();
         this.partidos = new ArrayList<>();
 
-        for (int i = 0; i < DEFAULT_ZONAS_NORMALES; i++) {
-            Zona zonaNormal = new Zona(TipoZona.ZONA_NORMAL, 10.00);
-            mapZonas.put(zonaNormal.getZoneID(), zonaNormal);
+        generateZonas(DEFAULT_ZONAS_NORMALES, TipoZona.ZONA_NORMAL, 10.00);
+        generateZonas(DEFAULT_ZONAS_VIP, TipoZona.ZONA_VIP, 20.00);
+        generatePartidos("Javea", "Denia", TipoPartido.ALTA_AFLUENCIA, "01/01/2020");
+        generatePartidos("Valencia", "Alicante", TipoPartido.ALTA_AFLUENCIA, "02/02/2022");
+
+        for (Partido partido : partidos) {
+            generateEntradas(partido, 100);
         }
 
-        for (int i = 0; i < DEFAULT_ZONAS_VIP; i++) {
-            Zona zonaVIP = new Zona(TipoZona.ZONA_VIP, 20.00);
-            mapZonas.put(zonaVIP.getZoneID(), zonaVIP);
+    }
+
+    private void generateEntradas(Partido partido, int numEntradas) {
+        List<Entrada> entradas = new ArrayList<>();
+        for (int i = 0; i < numEntradas; i++) {
+            Zona zona = getRandomZona();
+            int fila = zona.getRandomFila();
+            int asiento = zona.getRandomAsiento(fila);
+            try {
+                Entrada entrada = new EntradaNormal(partido, zona, fila, asiento);
+                partido.addEntrada(entrada);
+            } catch (IllegalArgumentException iae) {
+                System.err.println(iae.getMessage());
+            }
         }
+    }
 
+    private Zona getRandomZona() {
+        List<Zona> zonas = new ArrayList<>(mapZonas.values());
+        return zonas.get(new Random().nextInt(zonas.size()));
+    }
 
+    private void generateZonas(int defaultNum, TipoZona tipoZona, double precioBase) {
+        for (int i = 0; i < defaultNum; i++) {
+            Zona zona = new Zona(tipoZona, precioBase);
+            mapZonas.put(zona.getZoneID(), zona);
+        }
+    }
+
+    private void generatePartidos(String nombreLocal, String nombreVisit, TipoPartido tipoPartido, String fechaPartido) {
+        try {
+            //for(int i = 0; i < numPartidos; i++) {
+            Partido partido = new Partido(nombreLocal, nombreVisit, tipoPartido, fechaPartido);
+            partidos.add(partido);
+            // }
+        } catch (DateTimeParseException dtpe) {
+            dtpe.getMessage();
+        }
     }
 
     public static int getNextID() {

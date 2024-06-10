@@ -1,17 +1,26 @@
 package com.denniseckerskorn.tema11.ejercicio07.entradas;
 
+import com.denniseckerskorn.tema11.ejercicio07.Partido;
 import com.denniseckerskorn.tema11.ejercicio07.TipoPartido;
 import com.denniseckerskorn.tema11.ejercicio07.Zona;
 
 import java.util.Objects;
-import java.util.UUID;
 
 public class EntradaVIP extends Entrada {
     private final String codigoUnico;
 
-    public EntradaVIP(TipoPartido tipoPartido, Zona zona, int fila, int asiento) {
-        super(tipoPartido, zona, fila, asiento);
-        this.codigoUnico = UUID.randomUUID().toString();
+    public EntradaVIP(Partido partido, Zona zona, int fila, int asiento) {
+        super(partido, zona, fila, asiento);
+        this.codigoUnico = generatePassword(8);
+    }
+
+    private String generatePassword(int passwordSize) {
+        StringBuilder sb = new StringBuilder(passwordSize);
+        for(int i = 0; i < passwordSize; i++) {
+            char c = (char) ((char) getRandom().nextInt(65, 122) + 1);
+            sb.append(c);
+        }
+        return sb.toString();
     }
 
     public String getCodigoUnico() {
