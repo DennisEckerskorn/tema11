@@ -18,6 +18,9 @@ public class Main {
         //Menu menu = new Menu();
         //InventoryMenu inventoryMenu = new InventoryMenu();
 
+        Estadio estadio = new Estadio("Test");
+        System.out.println(estadio);
+
     }
 
 

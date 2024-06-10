@@ -19,6 +19,16 @@ public class Fila {
         }
     }
 
+    public boolean addAsiento(int numAsiento, boolean ocupado) {
+        Asiento asiento = new Asiento(numAsiento, ocupado);
+        for(int i = 0; i < asientos.size(); i++) {
+            if(asientos.get(i).getNumAsiento() == numAsiento) {
+                return false;
+            }
+        }
+        return asientos.add(asiento);
+    }
+
     public int getRandomAsiento() throws IllegalArgumentException {
         List<Integer> availableSeats = new ArrayList<>();
         for(Asiento asiento : asientos) {
@@ -32,6 +42,14 @@ public class Fila {
         return availableSeats.get(random.nextInt(availableSeats.size()));
     }
 
+    public boolean marcarAsientoOcupado(int numeroAsiento) {
+        Asiento asiento = asientos.get(numeroAsiento);
+        if (asiento != null && asiento.isOcupado()) {
+            asiento.setOcupado(true);
+            return true;
+        }
+        return false;
+    }
     public List<Asiento> getAsientos() {
         return asientos;
     }
@@ -44,14 +62,6 @@ public class Fila {
         return asientos.size();
     }
 
-    public boolean marcarAsientoOcupado(int numeroAsiento) {
-        Asiento asiento = asientos.get(numeroAsiento);
-        if (asiento != null && asiento.isOcupado()) {
-            asiento.setOcupado(true);
-            return true;
-        }
-        return false;
-    }
 
     @Override
     public boolean equals(Object o) {

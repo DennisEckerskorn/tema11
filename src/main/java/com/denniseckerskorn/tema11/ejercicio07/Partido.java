@@ -28,11 +28,12 @@ public class Partido {
         this.fechaPartido = LocalDate.parse(fechaPartido, dtf);
     }
 
-    public void addEntrada(Entrada entrada) {
+    public boolean addEntrada(Entrada entrada) {
         try {
-            entradas.add(entrada);
+            return entradas.add(entrada);
         } catch (IllegalArgumentException iea) {
             System.err.println(iea.getMessage());
+            return false;
         }
     }
 

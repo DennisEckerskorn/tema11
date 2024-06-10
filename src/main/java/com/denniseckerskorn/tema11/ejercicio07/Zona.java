@@ -23,11 +23,41 @@ public class Zona {
         }
     }
 
+    public boolean addFila(int numFila) {
+        Fila fila = new Fila(numFila);
+        for (int i = 0; i < filas.size(); i++) {
+            if (filas.get(i).getNumFila() == numFila) {
+                return false;
+            }
+        }
+        return filas.add(fila);
+    }
+
+    public boolean marcarAsientoOcupado(int fila, int numeroAsiento) {
+        if (fila >= 1 && fila <= filas.size()) {
+            return filas.get(fila - 1).marcarAsientoOcupado(numeroAsiento);
+        }
+        return false;
+    }
+
+    public double calcularPrecioFinal(TipoPartido tipoPartido) throws IllegalArgumentException {
+        switch (tipoPartido) {
+            case BAJA_AFLUENCIA:
+                return precioBase * 0.75;
+            case MEDIA_AFLUENCIA:
+                return precioBase;
+            case ALTA_AFLUENCIA:
+                return precioBase * 1.30;
+            default:
+                throw new IllegalArgumentException("No es un tipo de partido váldio" + tipoPartido);
+        }
+    }
+
     public int getRandomFila() {
         return new Random().nextInt(filas.size());
     }
 
-    public int getRandomAsiento(int filaIndex) throws IllegalArgumentException{
+    public int getRandomAsiento(int filaIndex) throws IllegalArgumentException {
         if (filaIndex >= 0 && filaIndex < filas.size()) {
             Fila fila = filas.get(filaIndex);
             return fila.getRandomAsiento();
@@ -64,25 +94,6 @@ public class Zona {
         return totalAsientos;
     }
 
-    public boolean marcarAsientoOcupado(int fila, int numeroAsiento) {
-        if (fila >= 1 && fila <= filas.size()) {
-            return filas.get(fila - 1).marcarAsientoOcupado(numeroAsiento);
-        }
-        return false;
-    }
-
-    public double calcularPrecioFinal(TipoPartido tipoPartido) throws IllegalArgumentException {
-        switch (tipoPartido) {
-            case BAJA_AFLUENCIA:
-                return precioBase * 0.75;
-            case MEDIA_AFLUENCIA:
-                return precioBase;
-            case ALTA_AFLUENCIA:
-                return precioBase * 1.30;
-            default:
-                throw new IllegalArgumentException("No es un tipo de partido váldio" + tipoPartido);
-        }
-    }
 
     @Override
     public boolean equals(Object o) {

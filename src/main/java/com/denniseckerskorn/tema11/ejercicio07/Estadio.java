@@ -25,13 +25,8 @@ public class Estadio {
 
         generateZonas(DEFAULT_ZONAS_NORMALES, TipoZona.ZONA_NORMAL, 10.00);
         generateZonas(DEFAULT_ZONAS_VIP, TipoZona.ZONA_VIP, 20.00);
-        generatePartidos("Javea", "Denia", TipoPartido.ALTA_AFLUENCIA, "01/01/2020");
-        generatePartidos("Valencia", "Alicante", TipoPartido.ALTA_AFLUENCIA, "02/02/2022");
-
-        for (Partido partido : partidos) {
-            generateEntradas(partido, 100);
-        }
-
+        generatePartido("Javea", "Denia", TipoPartido.ALTA_AFLUENCIA, "01/01/2020");
+        generatePartido("Valencia", "Alicante", TipoPartido.ALTA_AFLUENCIA, "02/02/2022");
     }
 
     private void generateEntradas(Partido partido, int numEntradas) {
@@ -54,14 +49,20 @@ public class Estadio {
         return zonas.get(new Random().nextInt(zonas.size()));
     }
 
-    private void generateZonas(int defaultNum, TipoZona tipoZona, double precioBase) {
-        for (int i = 0; i < defaultNum; i++) {
+    private void generateZonas(int numZonas, TipoZona tipoZona, double precioBase) {
+        for (int i = 0; i < numZonas; i++) {
             Zona zona = new Zona(tipoZona, precioBase);
             mapZonas.put(zona.getZoneID(), zona);
         }
     }
 
-    private void generatePartidos(String nombreLocal, String nombreVisit, TipoPartido tipoPartido, String fechaPartido) {
+    public boolean addZona(TipoZona tipoZona, double precioBase) {
+        Zona zona = new Zona(tipoZona, precioBase);
+        mapZonas.put(zona.getZoneID(), zona);
+        return true;
+    }
+
+    private void generatePartido(String nombreLocal, String nombreVisit, TipoPartido tipoPartido, String fechaPartido) {
         try {
             //for(int i = 0; i < numPartidos; i++) {
             Partido partido = new Partido(nombreLocal, nombreVisit, tipoPartido, fechaPartido);
@@ -69,6 +70,15 @@ public class Estadio {
             // }
         } catch (DateTimeParseException dtpe) {
             dtpe.getMessage();
+        }
+    }
+
+    public boolean addPartido(String nombreLocal, String nombreVisit, TipoPartido tipoPartido, String fechaPartido) {
+        try {
+            Partido partido = new Partido(nombreLocal, nombreVisit, tipoPartido, fechaPartido);
+            return partidos.add(partido);
+        } catch (DateTimeParseException dtpe) {
+            System.err.println(dtpe.getMessage());
         }
     }
 
