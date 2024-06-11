@@ -29,12 +29,30 @@ public class Partido {
     }
 
     public boolean addEntrada(Entrada entrada) {
-        try {
-            return entradas.add(entrada);
-        } catch (IllegalArgumentException iea) {
-            System.err.println(iea.getMessage());
-            return false;
+        return entradas.add(entrada);
+    }
+
+    public boolean removeEntrada(Entrada entrada) {
+        return entradas.remove(entrada);
+    }
+
+    public double calcularTotalEntradasVendidas() {
+        double total = 0.00;
+        for (Entrada entrada : entradas) {
+            if (entrada != null && entrada.getPrecioFinalEntrada() > 0) {
+                total += entrada.getPrecioFinalEntrada();
+            }
         }
+        return total;
+    }
+
+    public Entrada obtenerEntradaPorID(int id) {
+        for (Entrada entrada : entradas) {
+            if (entrada.getId() == id) {
+                return entrada;
+            }
+        }
+        return null;
     }
 
     public int getId() {

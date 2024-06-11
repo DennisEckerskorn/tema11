@@ -29,6 +29,61 @@ public class Estadio {
         generatePartido("Valencia", "Alicante", TipoPartido.ALTA_AFLUENCIA, "02/02/2022");
     }
 
+    public List<Asiento> asientosOcupados() {
+        List<Asiento> asientosOcupados = new ArrayList<>();
+
+        for (Zona zona : mapZonas.values()) {
+            List<Fila> filas = zona.getFilas();
+
+            for (Fila fila : filas) {
+                List<Asiento> asientos = fila.getAsientos();
+
+                for (Asiento asiento : asientos) {
+                    if (asiento.isOcupado()) {
+                        asientosOcupados.add(asiento);
+                    }
+                }
+            }
+        }
+        return asientosOcupados;
+    }
+
+    public List<Asiento> asientosDisponibles() {
+        List<Asiento> asientosDisponibles = new ArrayList<>();
+
+        for (Zona zona : mapZonas.values()) {
+            List<Fila> filas = zona.getFilas();
+
+            for (Fila fila : filas) {
+                List<Asiento> asientos = fila.getAsientos();
+
+                for (Asiento asiento : asientos) {
+                    if (!asiento.isOcupado()) {
+                        asientosDisponibles.add(asiento);
+                    }
+                }
+            }
+        }
+        return asientosDisponibles;
+    }
+
+    public Entrada obtenerEntradaPartidoPorID(int id) {
+        for (Partido partido : partidos) {
+            Entrada entrada = partido.obtenerEntradaPorID(id);
+            return entrada;
+        }
+        return null;
+    }
+
+    public boolean eliminarEntrada(Entrada entrada) {
+        for (Partido partido : partidos) {
+            if (partido.removeEntrada(entrada)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     private void generateEntradas(Partido partido, int numEntradas) {
         List<Entrada> entradas = new ArrayList<>();
         for (int i = 0; i < numEntradas; i++) {
@@ -79,6 +134,7 @@ public class Estadio {
             return partidos.add(partido);
         } catch (DateTimeParseException dtpe) {
             System.err.println(dtpe.getMessage());
+            return false;
         }
     }
 
@@ -97,6 +153,11 @@ public class Estadio {
     public Map<Integer, Zona> getMapZonas() {
         return mapZonas;
     }
+
+    public List<Partido> getPartidos() {
+        return partidos;
+    }
+
 
     @Override
     public boolean equals(Object o) {

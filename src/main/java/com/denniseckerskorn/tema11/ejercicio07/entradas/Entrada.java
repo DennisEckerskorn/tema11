@@ -15,7 +15,7 @@ public abstract class Entrada {
     private int asiento;
     private Random random;
 
-    public Entrada(Partido partido, Zona zona, int fila, int asiento) throws IllegalArgumentException {
+    public Entrada(Partido partido, Zona zona, int fila, int asiento) {
         this.id = ++nextID;
         this.partido = partido;
         this.zona = zona;
@@ -23,10 +23,6 @@ public abstract class Entrada {
         this.asiento = asiento;
         this.precioFinalEntrada = zona.calcularPrecioFinal(partido.getTipoPartido());
         this.random = new Random();
-
-        if(!zona.marcarAsientoOcupado(fila, asiento)) {
-            throw new IllegalArgumentException("El asiento " + asiento + " en la fila " + fila + " ya está ocupado o no existe");
-        }
     }
 
     public int getId() {
@@ -75,7 +71,7 @@ public abstract class Entrada {
     public String toString() {
         return "Entrada{" +
                 "id=" + id +
-                ", partido=" + partido +
+                ", partido=" + partido.getId() +
                 ", zona=" + zona +
                 ", precioFinalEntrada=" + precioFinalEntrada +
                 ", fila=" + fila +

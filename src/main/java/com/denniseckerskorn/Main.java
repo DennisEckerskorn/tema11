@@ -1,9 +1,6 @@
 package com.denniseckerskorn;
 
-import com.denniseckerskorn.tema11.ejercicio07.Estadio;
-import com.denniseckerskorn.tema11.ejercicio07.TipoPartido;
-import com.denniseckerskorn.tema11.ejercicio07.TipoZona;
-import com.denniseckerskorn.tema11.ejercicio07.Zona;
+import com.denniseckerskorn.tema11.ejercicio07.*;
 import com.denniseckerskorn.tema11.ejercicio07.entradas.Entrada;
 import com.denniseckerskorn.tema11.ejercicio07.entradas.EntradaVIP;
 
@@ -18,8 +15,7 @@ public class Main {
         //Menu menu = new Menu();
         //InventoryMenu inventoryMenu = new InventoryMenu();
 
-        Estadio estadio = new Estadio("Test");
-        System.out.println(estadio);
+        MenuEstadio menuEstadio = new MenuEstadio();
 
     }
 

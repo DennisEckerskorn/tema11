@@ -21,8 +21,8 @@ public class Fila {
 
     public boolean addAsiento(int numAsiento, boolean ocupado) {
         Asiento asiento = new Asiento(numAsiento, ocupado);
-        for(int i = 0; i < asientos.size(); i++) {
-            if(asientos.get(i).getNumAsiento() == numAsiento) {
+        for (int i = 0; i < asientos.size(); i++) {
+            if (asientos.get(i).getNumAsiento() == numAsiento) {
                 return false;
             }
         }
@@ -31,25 +31,43 @@ public class Fila {
 
     public int getRandomAsiento() throws IllegalArgumentException {
         List<Integer> availableSeats = new ArrayList<>();
-        for(Asiento asiento : asientos) {
-            if(!asiento.isOcupado()) {
+        for (Asiento asiento : asientos) {
+            if (asiento.isOcupado()) {
                 availableSeats.add(asiento.getNumAsiento());
             }
         }
-        if(availableSeats.isEmpty()) {
+        if (availableSeats.isEmpty()) {
             throw new IllegalArgumentException("No hay asientos disponibles en la fila ");
         }
         return availableSeats.get(random.nextInt(availableSeats.size()));
     }
 
     public boolean marcarAsientoOcupado(int numeroAsiento) {
-        Asiento asiento = asientos.get(numeroAsiento);
-        if (asiento != null && asiento.isOcupado()) {
-            asiento.setOcupado(true);
-            return true;
+        for (Asiento asiento : asientos) {
+            if (asiento.getNumAsiento() == numeroAsiento) {
+                if (asiento.isOcupado()) {
+                    asiento.setOcupado(true);
+                    return true;
+                }
+                return false;
+            }
         }
         return false;
     }
+
+    public boolean marcarAsientoLibre(int numeroAsiento) {
+        for (Asiento asiento : asientos) {
+            if (asiento.getNumAsiento() == numeroAsiento) {
+                if (asiento.isOcupado()) {
+                    asiento.setOcupado(false);
+                    return true;
+                }
+                return false;
+            }
+        }
+        return false;
+    }
+
     public List<Asiento> getAsientos() {
         return asientos;
     }

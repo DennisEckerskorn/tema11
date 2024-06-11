@@ -40,6 +40,13 @@ public class Zona {
         return false;
     }
 
+    public boolean marcarAsientoDisponible(int fila, int numeroAsiento) {
+        if (fila >= 1 && fila <= filas.size()) {
+            return filas.get(fila - 1).marcarAsientoLibre(numeroAsiento);
+        }
+        return false;
+    }
+
     public double calcularPrecioFinal(TipoPartido tipoPartido) throws IllegalArgumentException {
         switch (tipoPartido) {
             case BAJA_AFLUENCIA:
